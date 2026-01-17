@@ -33,6 +33,20 @@ DEALLOCATE PREPARE stmt;
 DESCRIBE donor;
 DESCRIBE donation;
 
+
+ALTER TABLE blood_request
+MODIFY COLUMN status ENUM(
+    'Pending',
+    'Approved',
+    'Rejected',
+    'Completed',
+    'Cancelled',
+    'Fulfilled'
+) NOT NULL DEFAULT 'Pending';
+
+
+
+
 SELECT '✅ All database issues fixed!' as Status;
 SELECT 'Gender column is now VARCHAR(20)' as Fix1;
 SELECT 'Screening ID is now optional (NULL allowed)' as Fix2;

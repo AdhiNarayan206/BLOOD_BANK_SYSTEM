@@ -1,16 +1,5 @@
 const API_URL = 'http://localhost:5000';
 
-const bloodGroupColors = {
-    'A+': 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-    'A-': 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
-    'B+': 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
-    'B-': 'linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)',
-    'AB+': 'linear-gradient(135deg, #fa709a 0%, #fee140 100%)',
-    'AB-': 'linear-gradient(135deg, #30cfd0 0%, #330867 100%)',
-    'O+': 'linear-gradient(135deg, #a8edea 0%, #fed6e3 100%)',
-    'O-': 'linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%)'
-};
-
 let allStock = [];
 let allBanks = [];
 
@@ -37,58 +26,11 @@ async function loadStock() {
     try {
         const response = await fetch(`${API_URL}/stock`);
         allStock = await response.json();
-        displayStockGrid();
         displayStockTable(allStock);
     } catch (error) {
         console.error('Error loading stock:', error);
         showAlert('Error loading stock data', 'error');
     }
-}
-
-// Display stock grid
-function displayStockGrid() {
-    const stockGrid = document.getElementById('stockGrid');
-    stockGrid.innerHTML = '';
-    
-    const bloodGroups = ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'];
-    
-    // Calculate total units per blood group (include all stock regardless of status)
-    const stockByGroup = {};
-    bloodGroups.forEach(group => {
-        stockByGroup[group] = allStock
-            .filter(s => s.blood_group === group)
-            .reduce((sum, s) => sum + (s.quantity_units || 0), 0);
-    });
-    
-    bloodGroups.forEach(group => {
-        const units = stockByGroup[group] || 0;
-        
-        const stockCard = document.createElement('div');
-        stockCard.className = 'card';
-        stockCard.style.background = bloodGroupColors[group];
-        stockCard.style.color = 'white';
-        stockCard.style.padding = '1.5rem';
-        stockCard.style.textAlign = 'center';
-        
-        let statusEmoji = '✓ Good Stock';
-        let statusColor = 'rgba(255,255,255,0.9)';
-        
-        if (units === 0) {
-            statusEmoji = '❌ Out of Stock';
-        } else if (units < 10) {
-            statusEmoji = '⚠️ Critical';
-        } else if (units < 30) {
-            statusEmoji = '⚡ Low';
-        }
-        
-        stockCard.innerHTML = `
-            <div style="font-size: 2.5rem; font-weight: 800; margin-bottom: 0.5rem;">${group}</div>
-            <div style="font-size: 1.75rem; font-weight: 700; margin-bottom: 0.5rem;">${units} Units</div>
-            <div style="opacity: 0.95; font-size: 0.95rem; font-weight: 600;">${statusEmoji}</div>
-        `;
-        
-        stockGrid.appendChild(stockCard);
-    });
 }
 
 // Sorting state
