@@ -8,7 +8,7 @@ import traceback
 app = Flask(__name__)
 app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = 'A1d2h3i4*x'
+app.config['MYSQL_PASSWORD'] = ''
 app.config['MYSQL_DB'] = 'blood_bank_db'
 mysql = MySQL(app)
 CORS(app)
