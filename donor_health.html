@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Donor Health Screening Management">
+    <title>Health Screening - Blood Bank Management System</title>
+    <link rel="stylesheet" href="static/css/style.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <span class="logo-icon">🩸</span>
+                <span>BloodBank</span>
+            </a>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Dashboard</a></li>
+                <li><a href="donors.html" class="nav-link">Donors</a></li>
+                <li><a href="donor_health.html" class="nav-link active">Health Screening</a></li>
+                <li><a href="donations.html" class="nav-link">Donations</a></li>
+                <li><a href="stock.html" class="nav-link">Blood Stock</a></li>
+                <li><a href="requests.html" class="nav-link">Requests</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Page Header -->
+        <div class="page-header">
+            <h1 class="page-title">Health Screening Records</h1>
+            <p class="page-subtitle">Record and manage donor health screenings</p>
+        </div>
+
+        <!-- Action Bar -->
+        <div class="card" style="margin-bottom: 2rem;">
+            <div style="display: flex; justify-content: flex-end;">
+                <button class="btn btn-primary" onclick="openScreeningModal()">
+                    <span>➕</span>
+                    <span>New Health Screening</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Screening Records Table -->
+        <div class="card">
+            <div class="card-header">
+                <h2 class="card-title">All Health Screenings</h2>
+                <span class="card-icon">🏥</span>
+            </div>
+            <div class="table-container">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Screening ID</th>
+                            <th>Donor Name</th>
+                            <th>Date</th>
+                            <th>BP</th>
+                            <th>Weight (kg)</th>
+                            <th>Disease Detected</th>
+                            <th>Eligibility</th>
+                        </tr>
+                    </thead>
+                    <tbody id="screeningsTableBody">
+                        <tr>
+                            <td colspan="7" style="text-align: center;">
+                                <div class="spinner"></div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Screening Modal -->
+    <div id="screeningModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Record Health Screening</h2>
+                <button class="modal-close" onclick="closeScreeningModal()">&times;</button>
+            </div>
+            <form id="screeningForm" onsubmit="recordScreening(event)">
+                <div class="form-group">
+                    <label class="form-label">Select Donor *</label>
+                    <select name="donor_id" class="form-select" required>
+                        <option value="">Choose a donor...</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Screening Date *</label>
+                    <input type="date" name="screening_date" class="form-input" required>
+                </div>
+
+                <div class="grid grid-2">
+                    <div class="form-group">
+                        <label class="form-label">Blood Pressure</label>
+                        <input type="text" name="bp" class="form-input" placeholder="e.g., 120/80">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Weight (kg)</label>
+                        <input type="number" name="weight" step="0.1" class="form-input" placeholder="e.g., 70.5">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Disease Detected (if any)</label>
+                    <input type="text" name="disease_detected" class="form-input" placeholder="None or specify disease">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Eligibility Status *</label>
+                    <select name="eligibility_status" class="form-select" required>
+                        <option value="">Select Status</option>
+                        <option value="Eligible">✅ Eligible</option>
+                        <option value="Not Eligible">❌ Not Eligible</option>
+                    </select>
+                </div>
+
+                <div class="alert alert-info" style="margin-top: 1rem;">
+                    <span>ℹ</span>
+                    <span>After saving, note the <strong>Screening ID</strong> for recording donations</span>
+                </div>
+
+                <div style="display: flex; gap: 1rem; justify-content: flex-end; margin-top: 2rem;">
+                    <button type="button" class="btn btn-outline" onclick="closeScreeningModal()">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Record Screening</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="static/js/donor_health.js"></script>
+</body>
+</html>
